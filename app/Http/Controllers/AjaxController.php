@@ -32,8 +32,10 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
     $keyword = $request->input('keyword');
+    $page = ($request->input('page')) ? $request->input('page') : 1;
+    $offset = ($request->input('offset')) ? $request->input('offset') : 10;
 
-    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword);
+    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword.'&page='.$page.'&offset='.$offset);
 
     return $res->getBody();
   }
