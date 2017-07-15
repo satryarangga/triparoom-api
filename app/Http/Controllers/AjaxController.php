@@ -34,6 +34,8 @@ class AjaxController extends Controller {
     $keyword = $request->input('keyword');
     $page = ($request->input('page')) ? $request->input('page') : 1;
     $offset = ($request->input('offset')) ? $request->input('offset') : 10;
+    $startDate = ($request->input('startdate')) ? $request->input('startdate') : date('Y-m-d');
+    $endDate = ($request->input('enddate')) ? $request->input('enddate') : date('Y-m-d', strtotime("+1 day"));
 
     $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword.'&page='.$page.'&offset='.$offset);
 
