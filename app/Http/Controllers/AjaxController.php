@@ -36,8 +36,12 @@ class AjaxController extends Controller {
     $offset = ($request->input('offset')) ? $request->input('offset') : 10;
     $startDate = ($request->input('startdate')) ? $request->input('startdate') : date('Y-m-d');
     $endDate = ($request->input('enddate')) ? $request->input('enddate') : date('Y-m-d', strtotime("+1 day"));
+    $maxStar = ($request->input('star')) ? $request->input('star') : 5;
+    $minStar = ($request->input('star')) ? $request->input('star') : 0;
+    $maxPrice = ($request->input('maxprice')) ? $request->input('maxprice') : 5;
+    $minPrice = ($request->input('minprice')) ? $request->input('minprice') : 0;
 
-    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword.'&page='.$page.'&offset='.$offset.'&startdate='.$startDate.'&enddate='.$endDate);
+    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword.'&page='.$page.'&offset='.$offset.'&startdate='.$startDate.'&enddate='.$endDate.'&maxstar='.$maxStar.'&minstar='.$minStar.'&minprice='.$minPrice.'&maxprice='.$maxPrice);
 
     return $res->getBody();
   }
