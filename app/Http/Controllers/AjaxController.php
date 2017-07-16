@@ -51,7 +51,7 @@ class AjaxController extends Controller {
     $token = $request->input('token');
     $uri = $request->input('uri');
 
-    $res = $client->request('GET', $this.url.$uri.'&token='$token);
+    $res = $client->request('GET', $uri.'&token='$token);
 
     return $res->getBody();
   }
