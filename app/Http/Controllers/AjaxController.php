@@ -56,4 +56,13 @@ class AjaxController extends Controller {
     return $res->getBody();
   }
 
+  public function getHotelOrder (Request $request) {
+    $client = new Client();
+    $token = $request->input('token');
+
+    $res = $client('GET', $this->url.'/order?token='.$token);
+
+    return $res->getBody();
+  }
+
 }

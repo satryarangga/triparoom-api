@@ -16,3 +16,4 @@ use Illuminate\Http\Request;
 Route::get('token', 'AjaxController@getToken');
 Route::get('promo', 'AjaxController@getHotelPromo');
 Route::get('detailhotel', 'AjaxController@getHotelDetail');
+Route::get('order', 'AjaxController@getHotelOrder');
