@@ -70,7 +70,7 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
 
-    $res = $client->request('GET', $this->url.'/order?token='.$token);
+    $res = $client->request('GET', $this->url.'/order?token='.$token.'&output='.$this->output);
 
     return $res->getBody();
   }
