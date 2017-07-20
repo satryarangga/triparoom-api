@@ -50,6 +50,7 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
     $uri = $request->input('uri');
+    $uri = urldecode($uri);
 
     $res = $client->request('GET', $uri.'&token='.$token.'&output='.$this->output);
 
@@ -59,7 +60,14 @@ class AjaxController extends Controller {
   public function addHotelOrder (Request $request) {
     $client = new Client();
     $token = $request->input('token');
+    $cart = $request->input('currentCart');
     $uri = $request->input('uri');
+    $uri = urldecode($uri);
+
+    // DELETE CURRENT CART FIRST
+    if($cart) {
+      $client->request('GET', $this->url.'/order/delete_order?order_detail_id='.$cart.'&token='.$token.'&output='.$this->output);
+    }
 
     $res = $client->request('GET', $uri.'&token='.$token.'&output='.$this->output);
 
