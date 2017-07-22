@@ -79,8 +79,14 @@ class AjaxController extends Controller {
     $token = $request->input('token');
 
     $res = $client->request('GET', $this->url.'/order?token='.$token.'&output='.$this->output);
+    $response = json_decode($res->getBody(), true);
+    if($res->getStatusCode() == 200) {
+      $getPaymentMethod = $client->request('GET', $this->url.'/checkout/checkout_payment?token='.$token.'&output='.$this->output);
+      $paymentMethod = json_decode($getPaymentMethod->getBody());
+      $response['payment_method'] = $paymentMethod->available_payment;
+    }
 
-    return $res->getBody();
+    return $response;
   }
 
 }
