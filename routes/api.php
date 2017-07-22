@@ -18,3 +18,4 @@ Route::get('promo', 'AjaxController@getHotelPromo');
 Route::get('detailhotel', 'AjaxController@getHotelDetail');
 Route::get('order', 'AjaxController@getHotelOrder');
 Route::get('addOrder', 'AjaxController@addHotelOrder');
+Route::get('checkout', 'AjaxController@checkoutCustomer');
