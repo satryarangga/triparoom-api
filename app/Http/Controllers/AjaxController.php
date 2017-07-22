@@ -83,10 +83,26 @@ class AjaxController extends Controller {
     if($res->getStatusCode() == 200) {
       $getPaymentMethod = $client->request('GET', $this->url.'/checkout/checkout_payment?token='.$token.'&output='.$this->output);
       $paymentMethod = json_decode($getPaymentMethod->getBody());
-      $response['payment_method'] = $paymentMethod->available_payment;
+      $response['payment_method'] = isset($paymentMethod->available_payment) ? $paymentMethod->available_payment : [];
     }
 
     return $response;
+  }
+
+  public function checkoutCustomer (Request $request) {
+    $client = new Client();
+    $token = $request->input('token');
+    $salute = $request->input('salute');
+    $firstName = $request->input('first_name');
+    $lastName = $request->input('last_name');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
+    $detail_id = $request->input('order_detail_id');
+
+    $res = $client->request('GET', $this->url.'/checkout?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&email='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id&saveContinue=2');
+
+    return $res->getBody();
+
   }
 
 }
