@@ -104,7 +104,7 @@ class AjaxController extends Controller {
 
     $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id');
     // $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id&saveContinue=2');
-    if(stristr($string, '?')) { // processed by own website ex: bank transfer
+    if(stristr($uri, '?')) { // processed by own website ex: bank transfer
       $client->request('GET', $uri.'?token='.$token.'&output='.$this->output);
     }
 
