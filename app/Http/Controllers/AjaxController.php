@@ -116,10 +116,25 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
 
-    $res = $client->request('GET', $this->url.'/flight_api/all_airport??token='.$token.'&output='.$this->output);
+    $res = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output);
 
     return $res->getBody();
+  }
 
+  public function getFlight(Request $request) {
+    $client = new Client();
+    $token = $request->input('token');
+    $departureCode = $request->input('dcode');
+    $arrivalCode = $request->input('acode');
+    $depDate = $request->input('ddate');
+    $retDate = $request->input('rdate');
+    $adult = $request->input('adult');
+    $child = $request->input('child');
+    $infant = $request->input('infant');
+
+    $res = $client->request('GET', $this->url."/search/flight?d=$departureCode&a=$arrivalCode&date=$depDate&ret_date=$retDate&adult=$adult&child=$child&infant=$infant&token=$token&output=".$this->output);
+
+    return $res->getBody();
   }
 
 }
