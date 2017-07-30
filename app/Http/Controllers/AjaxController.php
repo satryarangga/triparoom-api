@@ -127,15 +127,15 @@ class AjaxController extends Controller {
     $departureCode = $request->input('dcode');
     $arrivalCode = $request->input('acode');
     $depDate = $request->input('ddate');
-    $retDate = $request->input('rdate');
+    $retDate = ($request->input('rdate')) ? 'ret_date='.$request->input('rdate') : '';
     $adult = $request->input('adult');
     $child = $request->input('child');
     $infant = $request->input('infant');
 
     $getAirport = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output);
-    $airport = json_decode($getAirpot->getBody(), true);
+    $airport = json_decode($getAirport->getBody(), true);
 
-    $res = $client->request('GET', $this->url."/search/flight?d=$departureCode&a=$arrivalCode&date=$depDate&ret_date=$retDate&adult=$adult&child=$child&infant=$infant&token=$token&output=".$this->output);
+    $res = $client->request('GET', $this->url."/search/flight?d=$departureCode&a=$arrivalCode&date=$depDate&$retDate&adult=$adult&child=$child&infant=$infant&token=$token&output=".$this->output);
 
     $body = json_decode($res->getBody(), true);
     $body['airport'] = $airport['all_airport']['airport'];
