@@ -151,7 +151,7 @@ class AjaxController extends Controller {
     $depDate = $request->input('dep_date');
     $retDate = ($request->input('ret_date')) ? 'ret_date='.$request->input('ret_date') : '';
 
-    $res = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output.'&flight_id='.$depFlightId.'&'.$retFlightId.'&date='.$depDate.'&'.$retDate);
+    $res = $client->request('GET', $this->url.'/flight_api/get_flight_data?token='.$token.'&output='.$this->output.'&flight_id='.$depFlightId.'&'.$retFlightId.'&date='.$depDate.'&'.$retDate);
 
     return $res->getBody();
   }
