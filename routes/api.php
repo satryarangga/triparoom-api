@@ -21,3 +21,4 @@ Route::get('addOrder', 'AjaxController@addHotelOrder');
 Route::get('checkout', 'AjaxController@checkoutCustomer');
 Route::get('airport', 'AjaxController@getAirport');
 Route::get('flight', 'AjaxController@getFlight');
+Route::get('flight-detail', 'AjaxController@getFlightData');

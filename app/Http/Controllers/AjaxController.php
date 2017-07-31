@@ -143,4 +143,17 @@ class AjaxController extends Controller {
     return $body;
   }
 
+  public function getFlightData (Request $request) {
+    $client = new Client();
+    $token = $request->input('token');
+    $depFlightId = $request->input('dep_flight_id');
+    $retFlightId = ($request->input('ret_flight_id')) ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
+    $depDate = $request->input('dep_date');
+    $retDate = ($request->input('ret_date')) ? 'ret_date='.$request->input('ret_date') : '';
+
+    $res = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output.'&flight_id='.$depFlightId.'&'.$retFlightId.'&date='.$depDate.'&'.$retDate);
+
+    return $res->getBody();
+  }
+
 }
