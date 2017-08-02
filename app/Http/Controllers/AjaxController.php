@@ -165,8 +165,8 @@ class AjaxController extends Controller {
     $email = $request->input('email');
     $phone = $request->input('phone');
 
-    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15");
-    
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15&output=".this->output);
+
     return $res->getBody();
   }
 
