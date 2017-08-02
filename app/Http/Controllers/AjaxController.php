@@ -156,4 +156,18 @@ class AjaxController extends Controller {
     return $res->getBody();
   }
 
+  public function addFlightOrder(Request $request) {
+    $client = new Client();
+    $token = $request->input('token');
+    $salute = $request->input('salute');
+    $firstName = $request->input('first_name');
+    $lastName = $request->input('last_name');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
+
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15");
+    
+    return $res->getBody();
+  }
+
 }
