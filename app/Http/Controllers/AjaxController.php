@@ -185,9 +185,15 @@ class AjaxController extends Controller {
     // $phone = $request->input('phone');
     // $order_id = $request->input('order_id');
     // $detail_id = $request->input('order_detail_id');
+
+    $salute = 'Mr';
+    $firstName = 'Satrya';
+    $lastName = 'Rangga';
+    $email = 'james@techbro.id'
+    $phone = 082718288282828;
     $uri = $request->input('uri');
     $uri = urldecode($uri);
-
+    $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&country=id&saveContinue=2');
     // $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id&saveContinue=2');
     // $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id');
 
