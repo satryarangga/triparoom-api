@@ -170,7 +170,7 @@ class AjaxController extends Controller {
     $child = $request->input('child');
     $infant = $request->input('infant');
 
-    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15&output=".$this->output."&flight_id=$flightId&ret_flight_id=$retFlightId&adult=$adult&child=$child&infant=$infant");
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15&output=".$this->output."&flight_id=$flightId&ret_flight_id=$retFlightId&adult=$adult&child=$child&infant=$infant&saveContinue=2");
 
     return $res->getBody();
   }
@@ -178,24 +178,14 @@ class AjaxController extends Controller {
   public function checkoutFlight (Request $request) {
     $client = new Client();
     $token = $request->input('token');
-    // $salute = $request->input('salute');
-    // $firstName = $request->input('first_name');
-    // $lastName = $request->input('last_name');
-    // $email = $request->input('email');
-    // $phone = $request->input('phone');
-    // $order_id = $request->input('order_id');
-    // $detail_id = $request->input('order_detail_id');
-
-    $salute = 'Mr';
-    $firstName = 'Satrya';
-    $lastName = 'Rangga';
-    $email = 'james@techbro.id'
-    $phone = 082718288282828;
+    $salute = $request->input('salute');
+    $firstName = $request->input('first_name');
+    $lastName = $request->input('last_name');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
     $uri = $request->input('uri');
     $uri = urldecode($uri);
     $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&country=id&saveContinue=2');
-    // $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id&saveContinue=2');
-    // $res = $client->request('GET', $this->url.'/checkout/checkout_customer?token='.$token.'&output='.$this->output.'&salutation='.$salute.'&firstName='.$firstName.'&lastName='.$lastName.'&phone='.$phone.'&emailAddress='.$email.'&conSalutation='.$salute.'&conFirstName='.$firstName.'&conLastName='.$lastName.'&conEmailAddress='.$email.'&conPhone='.$phone.'&detailId='.$detail_id.'&country=id');
 
     if(stristr($uri, '?') === FALSE) { // processed by own website ex: bank transfer
       $client->request('GET', $uri.'?token='.$token.'&output='.$this->output.'&btn_booking=1');
