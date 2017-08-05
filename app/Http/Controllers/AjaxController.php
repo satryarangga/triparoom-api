@@ -165,12 +165,12 @@ class AjaxController extends Controller {
     $email = $request->input('email');
     $phone = $request->input('phone');
     $flightId = $request->input('flight_id');
-    $retFlightId = ($request->input('ret_flight_id')) ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
+    $retFlightId = ($request->input('ret_flight_id') && $request->input('ret_flight_id') != 'undefined') ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
     $adult = $request->input('adult');
     $child = $request->input('child');
     $infant = $request->input('infant');
 
-    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant&saveContinue=2");
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&conSalutation=$salute&conFirstName=$firstName&conLastName=$lastName&conPhone=$phone&conEmailAddress=$email&titlea1=$salute&firstnamea1=$firstName&lastnamea1=$lastName&birthdatea1=1990-01-01&passportnationalitya1=ID&dcheckinbaggagea11=15&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant");
 
     return $res->getBody();
   }
