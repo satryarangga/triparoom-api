@@ -175,7 +175,7 @@ class AjaxController extends Controller {
       $strParam .= "$key=$val&";
     }
 
-    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&$strParam&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant&conEmailAddress=$email&conPhone=$phone");
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&$strParam&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant");
 
     return $res->getBody();
   }
