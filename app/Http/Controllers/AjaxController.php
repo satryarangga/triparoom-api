@@ -159,6 +159,8 @@ class AjaxController extends Controller {
   public function addFlightOrder(Request $request) {
     $client = new Client();
     $token = $request->input('token');
+    $email = $request->input('email');
+    $phone = $request->input('phone');
     $params = urldecode($request->input('params'));
     $flightId = $request->input('flight_id');
     $retFlightId = ($request->input('ret_flight_id') && $request->input('ret_flight_id') != 'undefined') ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
@@ -170,10 +172,10 @@ class AjaxController extends Controller {
     $strParam = '';
 
     foreach($param as $key => $val) {
-      $strParam = "$key=$val&";
+      $strParam .= "$key=$val&";
     }
 
-    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&$strParamoutput=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant");
+    $res = $client->request('GET', $this->url."/order/add/flight?token=$token&$strParam&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant&conEmailAddress=$email&conPhone=$phone");
 
     return $res->getBody();
   }
