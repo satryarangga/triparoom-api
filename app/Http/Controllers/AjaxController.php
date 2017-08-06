@@ -159,14 +159,15 @@ class AjaxController extends Controller {
   public function addFlightOrder(Request $request) {
     $client = new Client();
     $token = $request->input('token');
-    $param = $request->input('param');
+    $params = urldecode(json_decode($request->input('params'), true));
     $flightId = $request->input('flight_id');
     $retFlightId = ($request->input('ret_flight_id') && $request->input('ret_flight_id') != 'undefined') ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
     $adult = $request->input('adult');
     $child = $request->input('child');
     $infant = $request->input('infant');
 
-    var_dump($param); die;
+
+    var_dump($params); die;
 
     $res = $client->request('GET', $this->url."/order/add/flight?token=$token&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant");
 
