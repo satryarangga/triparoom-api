@@ -164,6 +164,8 @@ class AjaxController extends Controller {
     $params = urldecode($request->input('params'));
     $flightId = $request->input('flight_id');
     $retFlightId = ($request->input('ret_flight_id') && $request->input('ret_flight_id') != 'undefined') ? 'ret_flight_id='.$request->input('ret_flight_id') : '';
+    $flightName = $request->input('flight_name');
+    $retFlightName = $request->input('ret_flight_name');
     $adult = $request->input('adult');
     $child = $request->input('child');
     $infant = $request->input('infant');
@@ -173,6 +175,13 @@ class AjaxController extends Controller {
 
     foreach($param as $key => $val) {
       $strParam .= "$key=$val&";
+    }
+
+    // LION CAPTCHA
+    if(strtolower($flightName) == 'lion' || strtolower($retFlightName) == 'lion') {
+      $lion = $client->request('GET', $this->url."/flight_api/getLionCaptcha?token=$token&output=".$this->output);
+      $dataLion = json_decode($lion->getBody(), true);
+      $strParam .= "lioncaptcha=".$dataLion['lioncaptcha']."&lionsessionid=".$dataLion['lionsessionid'];
     }
 
     $res = $client->request('GET', $this->url."/order/add/flight?token=$token&$strParam&output=".$this->output."&flight_id=$flightId&$retFlightId&adult=$adult&child=$child&infant=$infant");
