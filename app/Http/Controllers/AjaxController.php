@@ -50,10 +50,14 @@ class AjaxController extends Controller {
   public function getHotelDetail (Request $request) {
     $client = new Client();
     $token = $request->input('token');
-    $uri = $request->input('uri');
-    $uri = urldecode($uri);
+    $province = $request->input('province');
+    $hotelname = $request->input('hotelname');
+    $stardate = $request->input('startdate');
+    $night = $request->input('night');
+    $room = $request->input('room');
+    $adult = $request->input('adult');
 
-    $res = $client->request('GET', $uri.'&token='.$token.'&output='.$this->output);
+    $res = $client->request('GET', $this->url."/hotel/$regional/$hotelname?token=$token&startdate=$startdate&night=$night&room=$room&adult=$adult&output=".$this->output);
 
     return $res->getBody();
   }
