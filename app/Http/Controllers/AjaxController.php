@@ -13,11 +13,13 @@ class AjaxController extends Controller {
   private $url;
   private $key;
   private $output;
+  private $lang;
 
   public function __construct() {
     $this->url = env('ROOT_API_URL');
     $this->key = env('API_KEY');
     $this->output = env('OUTPUT_API');
+    $this->LANG = env('API_LANG');
   }
 
   public function getToken (){
@@ -44,7 +46,7 @@ class AjaxController extends Controller {
     $maxPrice = ($request->input('maxprice')) ? $request->input('maxprice') : 10000000;
     $minPrice = ($request->input('minprice')) ? $request->input('minprice') : 0;
 
-    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&q='.$keyword.'&page='.$page.'&offset='.$offset.'&startdate='.$startDate.'&maxstar='.$maxStar.'&minstar='.$minStar.'&minprice='.$minPrice.'&maxprice='.$maxPrice.'&adult='.$adult.'&room='.$room.'&night='.$night);
+    $res = $client->request('GET', $this->url.'/search/hotel?token='.$token.'&output='.$this->output.'&lang='.$this->lang.'&q='.$keyword.'&page='.$page.'&offset='.$offset.'&startdate='.$startDate.'&maxstar='.$maxStar.'&minstar='.$minStar.'&minprice='.$minPrice.'&maxprice='.$maxPrice.'&adult='.$adult.'&room='.$room.'&night='.$night);
 
     return $res->getBody();
   }
@@ -58,7 +60,7 @@ class AjaxController extends Controller {
     $room = $request->input('room');
     $adult = $request->input('adult');
 
-    $res = $client->request('GET', $this->url."/$uri?token=$token&startdate=$startdate&night=$night&room=$room&adult=$adult&output=".$this->output);
+    $res = $client->request('GET', $this->url."/$uri?token=$token&startdate=$startdate&night=$night&room=$room&adult=$adult&output=".$this->output.'&lang='.$this->lang);
 
     return $res->getBody();
   }
@@ -87,7 +89,7 @@ class AjaxController extends Controller {
     $res = $client->request('GET', $this->url.'/order?token='.$token.'&output='.$this->output);
     $response = json_decode($res->getBody(), true);
     if($res->getStatusCode() == 200) {
-      $getPaymentMethod = $client->request('GET', $this->url.'/checkout/checkout_payment?token='.$token.'&output='.$this->output);
+      $getPaymentMethod = $client->request('GET', $this->url.'/checkout/checkout_payment?token='.$token.'&output='.$this->output.'&lang='.$this->lang);
       $paymentMethod = json_decode($getPaymentMethod->getBody());
       $response['payment_method'] = isset($paymentMethod->available_payment) ? $paymentMethod->available_payment : [];
     }
@@ -122,7 +124,7 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
 
-    $res = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output);
+    $res = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output.'&lang='.$this->lang);
 
     return $res->getBody();
   }
@@ -138,10 +140,10 @@ class AjaxController extends Controller {
     $child = $request->input('child');
     $infant = $request->input('infant');
 
-    $getAirport = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output);
+    $getAirport = $client->request('GET', $this->url.'/flight_api/all_airport?token='.$token.'&output='.$this->output.'&lang='.$this->lang);
     $airport = json_decode($getAirport->getBody(), true);
 
-    $res = $client->request('GET', $this->url."/search/flight?d=$departureCode&a=$arrivalCode&date=$depDate&$retDate&adult=$adult&child=$child&infant=$infant&token=$token&output=".$this->output);
+    $res = $client->request('GET', $this->url."/search/flight?d=$departureCode&a=$arrivalCode&date=$depDate&$retDate&adult=$adult&child=$child&infant=$infant&token=$token&output=".$this->output.'&lang='.$this->lang);
 
     $body = json_decode($res->getBody(), true);
     $body['airport'] = $airport['all_airport']['airport'];
@@ -157,7 +159,7 @@ class AjaxController extends Controller {
     $depDate = $request->input('dep_date');
     $retDate = ($request->input('ret_date')) ? 'ret_date='.$request->input('ret_date') : '';
 
-    $res = $client->request('GET', $this->url.'/flight_api/get_flight_data?token='.$token.'&output='.$this->output.'&flight_id='.$depFlightId.'&'.$retFlightId.'&date='.$depDate.'&'.$retDate);
+    $res = $client->request('GET', $this->url.'/flight_api/get_flight_data?token='.$token.'&output='.$this->output.'&flight_id='.$depFlightId.'&'.$retFlightId.'&date='.$depDate.'&'.$retDate.'&lang='.$this->lang.);
 
     return $res->getBody();
   }
