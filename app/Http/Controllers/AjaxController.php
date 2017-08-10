@@ -168,6 +168,7 @@ class AjaxController extends Controller {
     $client = new Client();
     $token = $request->input('token');
     $email = $request->input('email');
+    $cart = $request->input('cart');
     $phone = $request->input('phone');
     $params = urldecode($request->input('params'));
     $flightId = $request->input('flight_id');
@@ -183,6 +184,14 @@ class AjaxController extends Controller {
 
     foreach($param as $key => $val) {
       $strParam .= "$key=$val&";
+    }
+
+    // DELETE CURRENT CART FIRST
+    if($cart) {
+      $detail_id = explode(',', $cart);
+      foreach($detail_id as $key => $val) {
+        $client->request('GET', $this->url.'/order/delete_order?order_detail_id='.$val.'&token='.$token.'&output='.$this->output);  
+      }
     }
 
     // LION CAPTCHA
